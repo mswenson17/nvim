@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/home/matthew/catkin_ws/src/rover-rescue/autokrawler/scripts/roboclaw'
+let g:netrw_dirhist_2='/home/matthew/project_course/arduino-tow-control'
+let g:netrw_dirhist_3='/home/matthew/slam/hw2'
