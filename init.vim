@@ -5,11 +5,11 @@ call plug#begin('~/.vim/plugged')
 Plug 'bkad/CamelCaseMotion'
 Plug 'chrisbra/csv.vim'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'fidian/hexmode' 
+Plug 'fidian/hexmode'
 Plug 'houl/vim-repmo'
 Plug 'lervag/vimtex'
 "Plug 'SirVer/ultisnips'
-Plug 'majutsushi/tagbar'
+"Plug 'majutsushi/tagbar'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'mbbill/undotree'
 Plug 'milkypostman/vim-togglelist'
@@ -19,7 +19,8 @@ Plug 'roxma/nvim-completion-manager'
     "Plug 'sassanh/nvim-cm-eclim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
-Plug 'taketwo/vim-ros'
+"Plug 'taketwo/vim-ros'
+Plug 'tmhedberg/SimpylFold'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-abolish'
@@ -58,9 +59,9 @@ set expandtab
 set hlsearch
 set ignorecase
 set smartcase
-set hidden 
-set foldenable 
-set foldlevel=10 
+set hidden
+set foldenable
+set foldlevel=10
 syn region myFold start="\#IF" end="\#ENDIF" transparent fold
 set foldmethod=syntax
 let g:xml_syntax_folding =1
@@ -81,7 +82,7 @@ let g:tex_conceal=""
 ""autocmd BufRead,BufNewFile *.txt setlocal spell
 autocmd BufRead,BufNewFile *.launch setfiletype roslaunch
 
-call yankstack#setup()
+"call yankstack#setup()
 ""
 ""Mappings
 autocmd CmdwinEnter * nnoremap <CR> <CR>
@@ -92,12 +93,12 @@ noremap ~? ~/
 noremap / /\v
 map Y y$
 nnoremap <S-L> :nohl<CR>
-nnoremap B ^
-nnoremap E $
-nnoremap S "_diwP 
+"nnoremap B ^
+"nnoremap E $
+nnoremap S "_diwP
 nnoremap J j
 nnoremap <silent>JJ :join<CR>
-nnoremap S "_diwP 
+nnoremap S "_diwP
 
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -116,20 +117,17 @@ cnoremap :ex<CR> :Ex<CR>
 ""
 ""make tabbing indent and outdent in all modes
 """broken?
-    "nnoremap <Tab> >>
-    "nnoremap <S-Tab> <<_
-    "inoremap <S-Tab> <C-D>
-    "vnoremap <Tab> >gv
-    "vnoremap <S-Tab> <gv
-    "nnoremap <C-i> <Tab> 
+    nnoremap <Tab> >>
+    nnoremap <S-Tab> <<_
+    inoremap <S-Tab> <C-D>
+    vnoremap <Tab> >gv
+    vnoremap <S-Tab> <gv
+    "nnoremap <C-i> <Tab>
 
 autocmd TextYankPost  * :set norelativenumber
 nnoremap <silent><expr>d ':set relativenumber<CR>"'.v:register.'d'
 nnoremap <silent><expr>y ':set relativenumber<CR>"'.v:register.'y'
 onoremap <ESC> set norelativenumber<ESC>
-
-nnoremap <silent><leader>= :call Increment()<CR>
-nnoremap <silent><leader>- :call Decrement()<CR>
 
 nnoremap <silent><leader>w :call ToggleWrap()<CR>
 
@@ -145,29 +143,18 @@ tnoremap <A-h> <C-\><C-n>:bp<CR>
 tnoremap <A-j> <C-\><C-n>:b#<CR>
 tnoremap <Esc> <C-\><C-n>
 
-""noremap <F3> :YcmForceCompileAndDiagnostics<CR> 
+""noremap <F3> :YcmForceCompileAndDiagnostics<CR>
 noremap <F4> :ALEFix<CR>
 noremap <F5> :UndotreeToggle<CR>
+noremap <F6> :cd %:p:h<CR> :pwd <CR>
 noremap <F7> :NERDTreeToggle<CR>
-noremap <F8> :TagbarToggle<CR> 
-noremap <F9> :so ~/.config/nvim/init.vim<CR>
+noremap <F8> :TagbarToggle<CR>
+noremap <F9> :so $MYVIMRC<CR>
 noremap <F10> :redraw!<CR>
-noremap <F11> :e ~/.bashrc<CR>
-noremap <F12> :e ~/.config/nvim/init.vim<CR>
+"noremap <F11> :e ~/.bashrc<CR>
+noremap <F12> :e $MYVIMRC<CR>
 
 ""Functions
-
-function! Increment()              
-    exec "normal! gk\"zywgj"
-    let @l= @z+1
-    exec "normal! dw\"lgPbgj"
-endfunction
-
-function! Decrement()              
-    exec "normal! gk\"zywgj"
-    let @l= @z-1
-    exec "normal! dw\"lgPbgj"
-endfunction
 
 fun! TrimWhitespace()
     let l:save = winsaveview()
@@ -180,7 +167,7 @@ function! ToggleWrap()
     if &wrap
         echo "Wrap OFF"
         setlocal nowrap
-        setlocal nolbr 
+        setlocal nolbr
         set virtualedit=
         silent! nunmap <buffer> j
         silent! nunmap <buffer> k
@@ -188,8 +175,8 @@ function! ToggleWrap()
         silent! ounmap <buffer> k
     else
         echo "Wrap ON"
-        setlocal wrap 
-        setlocal lbr 
+        setlocal wrap
+        setlocal lbr
         set virtualedit=all
         noremap  <buffer> <silent> k gk
         noremap  <buffer> <silent> j gj
@@ -197,6 +184,9 @@ function! ToggleWrap()
         onoremap  <buffer> <silent> j gj
     endif
 endfunction
+
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+"autocmd FileChangedShellPost * \/ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 ""Plugin Options""
 
@@ -227,17 +217,17 @@ let g:indentLine_enabled = 1
 let g:indentLine_color_term = 237
 let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*,t\/\/.*bash']
 "let g:indentLine_concealcursor = 'vc'
-"let g:indentLine_conceallevel = 0 
+"let g:indentLine_conceallevel = 0
 
 ""CtrlP settings
-""let g:ctrlp_cmd = 
+""let g:ctrlp_cmd =
 "let g:ctrlp_by_filename = 1
 ""let g:ctrlp_custom_ignore =
 "let g:ctrlp_lazy_update = 1
 
 ""BufferLine settings
 "let g:bufferline_echo = 0
-"let g:rainbow_active = 0 
+"let g:rainbow_active = 0
 
 "CamelCaseMotion Settings
 map w <Plug>CamelCaseMotion_w
@@ -264,7 +254,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#whitespace#enabled = 0   
+let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#syntastic#enabled = 0
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
@@ -301,12 +291,13 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 "ALE
-let g:ale_lint_on_save =1
+let g:ale_lint_on_save =0
 let g:ale_fixers = {
 \            'python':['autopep8'],
 \            'xml':['xmllint']
 \}
 
+let g:ale_python_flake8_options = '--max-line-length=120'
 let g:ale_python_autopep8_options = '--aggressive --max-line-length=120'
 
 "NERDComment
@@ -322,5 +313,9 @@ vmap <leader><space> <plug>NERDCommenterToggle
 "let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 "let g:ycm_autoclose_preview_window_after_insertion = 1
 
-nmap <leader>p <Plug>yankstack_substitute_older_paste
-nmap <leader>P <Plug>yankstack_substitute_newer_paste
+"nmap <leader>p <Plug>yankstack_substitute_older_paste
+"nmap <leader>P <Plug>yankstack_substitute_newer_paste
+"
+cd ~
+let g:python3_host_prog='C:\Users\Matthew\AppData\Local\Programs\Python\Python36\python.exe'
+"let g:python_host_prog='C:/Users/foo/Envs/neovim/Scripts/python.exe'
