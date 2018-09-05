@@ -21,7 +21,6 @@ Plug 'tpope/vim-abolish'                 " adds Subvert command and case-coersio
 Plug 'tpope/vim-fugitive'                " adds git commands
 Plug 'tpope/vim-repeat'                  " allows certain plugin commands to be repeated with .
 Plug 'tpope/vim-surround'                " adds substitution of brackets for different brackets
-"Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'                 " cleans up the netrw window
 Plug 'w0rp/ale'                          " linter and syntax checker
 Plug 'vim-airline/vim-airline'           " status bar improvements
@@ -79,9 +78,8 @@ let g:tex_conceal=""                     " stop vimtex from subsituting latin ch
 ""autocmd BufRead,BufNewFile *.txt setlocal spell
 autocmd BufRead,BufNewFile *.launch setfiletype roslaunch  " use ros syntax for launch files
 
-"call yankstack#setup()
-""
 ""Mappings
+
 inoremap kj <Esc>
 
 nnoremap S "_diwP 
@@ -93,17 +91,16 @@ nnoremap <CR> <cr>O<Esc>
 " i mistype this all the goddamn time
 noremap ~? ~/   
 
-" turns on fnacy search
+" turns on fancy search
 noremap / /\v
 
 " Turn off highlighting
 nnoremap <S-L> :nohl<CR>
 
-"sacriledge
+"sacrilege
 "nnoremap B ^
 "map Y y$
 "nnoremap E $
-
 
 " I also hit J when i mean j all the time. this make the join command require
 " a double press. 
@@ -120,9 +117,6 @@ nnoremap <C-l> <C-w>l
 nnoremap <A-l> :bn<CR>
 nnoremap <A-h> :bp<CR>
 nnoremap <A-j> :b#<CR>
-
-"onoremap " i"
-"onoremap ( i(
 
 cnoremap :ex<CR> :Ex<CR>
 
@@ -146,6 +140,7 @@ if has('nvim')
     tnoremap <A-h> <C-\><C-n>:bp<CR>
     tnoremap <A-j> <C-\><C-n>:b#<CR>
     tnoremap <Esc> <C-\><C-n>
+endif 
 
 ""noremap <F3> :YcmForceCompileAndDiagnostics<CR> 
 noremap <F4> :ALEFix<CR>
@@ -156,6 +151,7 @@ if has('nvim')
     noremap <F9> :so ~/.config/nvim/init.vim<CR>
 else
     noremap <F9> :so ~/.vimrc<CR>
+endif 
 noremap <F10> :redraw!<CR>
 noremap <F11> :e ~/.bashrc<CR>
 noremap <F12> :e ~/.config/nvim/init.vim<CR>
@@ -277,10 +273,6 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
 
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-n>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-
 "nvim-completion settings
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -301,12 +293,3 @@ let g:clang_library_path = '/usr/lib/llvm-3.8/lib/libclang.so.1'
 let g:NERDCreateDefaultMappings = 0
 nmap <leader><space> <plug>NERDCommenterToggle
 vmap <leader><space> <plug>NERDCommenterToggle
-
-"let g:ycm_global_extra_conf = '~/.ycm_extra_conf.py'
-"let g:ycm_confirm_extra_conf = 0
-"let g:ycm_server_keep_logfiles = 1
-"let g:ycm_server_log_level = 'debug'
-"let g:ycm_always_populate_location_list = 1
-"let g:ycm_path_to_python_interpreter = '/usr/bin/python'
-"let g:ycm_autoclose_preview_window_after_insertion = 1
-
