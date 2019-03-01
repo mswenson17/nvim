@@ -118,6 +118,9 @@ nnoremap <silent>JJ J
 
 
 " better window switching
+let g:tmux_navigator_no_mappings = 1 
+let g:tmux_navigator_disable_when_zoomed = 1 
+
 nnoremap <C-h> :TmuxNavigateLeft<cr>
 nnoremap <C-j> :TmuxNavigateDown<cr>
 nnoremap <C-k> :TmuxNavigateUp<cr>
@@ -293,8 +296,11 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 set completeopt=noinsert,menuone,noselect
 
 " enable ncm2 for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
-let g:ncm2_pyclang#library_path = '/usr/lib/llvm-6.0/lib/libclang.so.1'
+
+if has('nvim')
+    autocmd BufEnter * call ncm2#enable_for_buffer()
+    let g:ncm2_pyclang#library_path = '/usr/lib/llvm-6.0/lib/libclang.so.1'
+endif
 
 "CtrlP
 let g:ctrlp_map = '<c-p>'
