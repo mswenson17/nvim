@@ -5,9 +5,9 @@ call plug#begin('~/.vim/plugged')
 Plug 'bkad/CamelCaseMotion'              " makes numbers, underscores, and case shifts the word limit
 Plug 'chrisbra/csv.vim'                  " plugin for better parsing, iteration through csv files (excel replacement)
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'fidian/hexmode'                    " plugin for displaying binary files as hex 
+Plug 'fidian/hexmode'                    " plugin for displaying binary files as hex
 Plug 'kien/ctrlp.vim'                    " fuzzy file finder
-Plug 'lervag/vimtex'                     " LaTeX syntax and format plugin 
+Plug 'lervag/vimtex'                     " LaTeX syntax and format plugin
 Plug 'majutsushi/tagbar'                 " Adds a file overview window
 "Plug 'maxbrunsfeld/vim-yankstack'        " saves previous yanks
 Plug 'mbbill/undotree'                   " graphical representation of the undo tree
@@ -69,7 +69,7 @@ set foldenable                           " turns on folding
 set foldlevelstart=15                     " don't fold the first levels when opening a file
 syn region myFold start="\#IF" end="\#ENDIF" transparent fold
 set foldmethod=syntax                    " folds based on syntax
-let g:xml_syntax_folding =1              " fold xml 
+let g:xml_syntax_folding =1              " fold xml
 
 set noequalalways                        " subdivide window when splitting instead of rebalancing
 set splitbelow                           " make new window on the bottom
@@ -77,7 +77,7 @@ set splitright                           " make new window on the right
 set timeoutlen=300                       " wait 300ms for a mapped command to timeout
 set ttimeoutlen=1000                     " wait 1s for a keycode to complete
 "set visualbell                           " fuck beeping
-"set t_vb=                                " fuck flashing 
+"set t_vb=                                " fuck flashing
 set diffopt=filler,vertical,context:1000,iwhite  " sane diff options
 set mouse=a                              " can interact with the mouse in all modes
 
@@ -91,14 +91,14 @@ autocmd BufRead,BufNewFile *.launch setfiletype roslaunch  " use ros syntax for 
 ""Mappings
 inoremap kj <Esc>
 
-nnoremap S "_diwP 
+nnoremap S "_diwP
 "stuff for using enter key to insert blank lines in normal mode
-autocmd CmdwinEnter * nnoremap <CR> <CR>   
+autocmd CmdwinEnter * nnoremap <CR> <CR>
 nnoremap <S-Enter> o<Esc>
 nnoremap <CR> <cr>O<Esc>
 
 " i mistype this all the goddamn time
-noremap ~? ~/   
+noremap ~? ~/
 
 " turns on fancy search
 noremap / /\v
@@ -112,14 +112,14 @@ nnoremap <S-L> :nohl<CR>
 "nnoremap E $
 
 " I also hit J when i mean j all the time. this make the join command require
-" a double press. 
+" a double press.
 nnoremap J j
 nnoremap <silent>JJ J
 
 
 " better window switching
-let g:tmux_navigator_no_mappings = 1 
-let g:tmux_navigator_disable_when_zoomed = 1 
+let g:tmux_navigator_no_mappings = 1
+let g:tmux_navigator_disable_when_zoomed = 1
 
 nnoremap <C-h> :TmuxNavigateLeft<cr>
 nnoremap <C-j> :TmuxNavigateDown<cr>
@@ -152,13 +152,14 @@ if has('nvim')
     tnoremap <A-h> <C-\><C-n>:bp<CR>
     tnoremap <A-j> <C-\><C-n>:b#<CR>
     tnoremap <Esc> <C-\><C-n>
-endif 
+endif
 
-""noremap <F3> :YcmForceCompileAndDiagnostics<CR> 
+""noremap <F3> :YcmForceCompileAndDiagnostics<CR>
+noremap <F3> :Clf<CR>
 noremap <F4> :ALEFix<CR>
 noremap <F5> :UndotreeToggle<CR>
 noremap <F7> :NERDTreeToggle<CR>
-noremap <F8> :TagbarToggle<CR> 
+noremap <F8> :TagbarToggle<CR>
 noremap <F10> :redraw!<CR>
 noremap <F11> :e ~/.bashrc<CR>
 if has('nvim')
@@ -167,12 +168,27 @@ if has('nvim')
 else
     noremap <F9> :so ~/.vimrc<CR>
     noremap <F12> :e ~/.vimrc<CR>
-endif 
+endif
 
 nnoremap <silent><leader>w :call ToggleWrap()<CR>
 nnoremap <silent><leader>t :call TrimWhitespace()<CR>
 
 ""Functions
+
+let g:clang_format_path = '$BDI/rt/build/tools/linux/clang-format'
+" Enable clang-format with Clf command
+function! ClangFormat()
+    let l:lines="all"
+    " py3f is necessary in latest vim. 'pyf' is correct for earlier versions.
+    if has('python3')
+        py3f ~/.vim/clang-format.py
+    else
+        pyf ~/.vim/clang-format.py
+    endif
+endfunction
+command! Clf call ClangFormat()
+
+
 fun! TrimWhitespace()
     let l:save = winsaveview()
     %s/\s\+$//e
@@ -187,7 +203,7 @@ function! ToggleWrap()
     if &wrap
         echo "Wrap OFF"
         setlocal nowrap
-        setlocal nolbr 
+        setlocal nolbr
         set virtualedit=
         silent! nunmap <buffer> j
         silent! nunmap <buffer> k
@@ -195,8 +211,8 @@ function! ToggleWrap()
         silent! ounmap <buffer> k
     else
         echo "Wrap ON"
-        setlocal wrap 
-        setlocal lbr 
+        setlocal wrap
+        setlocal lbr
         set virtualedit=all
         noremap  <buffer> <silent> k gk
         noremap  <buffer> <silent> j gj
@@ -234,7 +250,7 @@ let g:indentLine_enabled = 1
 let g:indentLine_color_term = 237
 let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*,t\/\/.*bash']
 "let g:indentLine_concealcursor = 'vc'
-"let g:indentLine_conceallevel = 0 
+"let g:indentLine_conceallevel = 0
 "
 "CamelCaseMotion Settings
 map w <Plug>CamelCaseMotion_w
@@ -262,7 +278,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#whitespace#enabled = 0   
+let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#syntastic#enabled = 0
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
@@ -317,7 +333,7 @@ let g:ale_lint_on_save = 1
 let g:ale_linters_explict = 1
 let g:ale_linters = {'cpp':['clang']}
 
-let g:ale_fixers = { 
+let g:ale_fixers = {
 \            'cpp':['clang-format'],
 \            'python':['autopep8'],
 \            'xml':['xmllint']
